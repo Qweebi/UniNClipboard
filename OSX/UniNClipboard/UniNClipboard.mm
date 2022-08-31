@@ -5,11 +5,14 @@ extern "C" {
  
     void OSXUniNClipboardSetPng(const char bytes[], const unsigned long length)
     {
-        NSLog(@"Byte length: %lu\n", length);
-        NSData *byteContent = [NSData dataWithBytes:bytes length:length];
-        NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-        [pasteboard clearContents];
-        [pasteboard declareTypes:@[NSPasteboardTypePNG] owner:nil];
-        [pasteboard setData:byteContent forType:NSPasteboardTypePNG];
+        @try {
+            NSData *byteContent = [NSData dataWithBytes:bytes length:length];
+            NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+            [pasteboard clearContents];
+            [pasteboard declareTypes:@[NSPasteboardTypePNG] owner:nil];
+            [pasteboard setData:byteContent forType:NSPasteboardTypePNG];
+        } @catch (NSException *exception) {
+            NSLog(@"Could not save to clipboard: %@\nReason: %@", exception.name, exception.reason);
+        }
     }
 }
