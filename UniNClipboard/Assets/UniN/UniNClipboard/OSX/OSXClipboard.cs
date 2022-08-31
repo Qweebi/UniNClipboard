@@ -16,6 +16,13 @@ namespace UniN.UniNClipboard
 			get { return OSXUniNClipboardGetText(); }
 			set { OSXUniNClipboardSetText(value); }
 		}
+		
+		public void CopyImage(Texture2D texture2D)
+		{
+			var bytes = texture2D.EncodeToPNG();
+			Debug.Log($"Length of byte array (Unity): {bytes.Length}");
+			OSXUniNClipboardSetPng(bytes, (ulong) bytes.Length);
+		}
 
 		public event Action OnClipboardChanged;
 
@@ -41,6 +48,9 @@ namespace UniN.UniNClipboard
 
 		[DllImport("UniNClipboard")]
 		private static extern void OSXUniNClipboardSetText(string text);
+		
+		[DllImport("UniNClipboard")]
+		private static extern void OSXUniNClipboardSetPng(byte[] content, ulong length);
 	}
 }
 

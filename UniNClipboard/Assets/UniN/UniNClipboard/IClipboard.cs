@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace UniN.UniNClipboard
 {
@@ -6,6 +7,7 @@ namespace UniN.UniNClipboard
 	{
 		bool ClipboardAvailable { get; }
 		string Text { get; set; }
+		void CopyImage(Texture2D texture2D);
 
 		event Action OnClipboardChanged;
 	}

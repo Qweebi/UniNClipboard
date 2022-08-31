@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,8 +15,27 @@ public class TestMenu : MonoBehaviour
 
 	public void OnCopyButtonPressed()
 	{
-		Clipboard.SharedClipboard.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
+		StartCoroutine(TakeScreenShoot());
 	}
+	
+	IEnumerator TakeScreenShoot()
+	{
+		yield return new WaitForEndOfFrame();
+		int width = UnityEngine.Screen.width;
+		int heigh = UnityEngine.Screen.height;
+		var screenshotTexture = new Texture2D(width, heigh, TextureFormat.ARGB32, false);
+		Rect rect = new Rect(0, 0, width, heigh);
+		screenshotTexture.ReadPixels(rect, 0 ,0);
+		screenshotTexture.Apply();
+		
+		var png = screenshotTexture.EncodeToPNG();
+		var path = $"{Application.persistentDataPath}/screen.png";
+		File.WriteAllBytes(path, png);
+
+		Clipboard.SharedClipboard.CopyImage(screenshotTexture);
+		Debug.Log($"Copied to clipboard: {path}");
+	}
+
 
 	public void OnDisplayContentPressed()
 	{

@@ -19,6 +19,11 @@ namespace UniN.UniNClipboard
 			set { this._text = value; }
 		}
 
+		public void CopyImage(Texture2D texture2D)
+		{
+			throw new NotImplementedException();
+		}
+
 		public event Action OnClipboardChanged;
 	}
 }
