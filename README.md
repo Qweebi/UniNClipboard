@@ -19,7 +19,13 @@ On Android, to keep it simple, we use the **JNI** implementation provided by Uni
 On iOS, a implementation file called `UniNClipboardHelper.mm` is provided containing all the required implementation.
 ### Mac OSX
 For Mac OSX, a compiled `UniNClipboard.bundle` is provided. If you would like to change or expand the implementation, the Xcode project is located in `OSX/UniNClipboard.xcodeproj`.
-**To build a new bundle file**, just press Cmd+B or go to `Product` > `Build`. If the build is successful, the new `UniNClipboard.bundle` will be automatically copied into the example Unity project.
+##### Building a new bundle (Instructions for Xcode 13.4.1)
+- Import the project into Xcode.
+- Click on Product -> Archive.
+- From the "Archives" window that pops up, select the archive that was generated. Click on "Distribute Content" on the right.
+- When asked to select a method of distribution, select "Built Products" and click on "Next".
+- Select a location to save the bundle and click on "Export".
+- Once the export completes, navigate to the selected location and drill down into the innermost directory. The bundle file should be generated.
 
 ### Windows
 TODO?
